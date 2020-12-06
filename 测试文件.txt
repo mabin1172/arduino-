@@ -1,0 +1,170 @@
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1
+$ git init
+Initialized empty Git repository in F:/test1/.git/
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ touch 'index.html'
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git add 'index.html'
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+        new file:   index.html
+
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git commit -m '创建index.html'
+[master (root-commit) 8aeca6b] 创建index.html
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 index.html
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git add 'index.html'
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   index.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git add 'index.html'
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   index.html
+
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git commit -m '修改index.html'
+[master 6ef5358] 修改index.html
+ 1 file changed, 1 insertion(+)
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git rm 'index.html'
+rm 'index.html'
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        deleted:    index.html
+
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git commit -m'通过git删除index.html'
+[master fe4b710] 通过git删除index.html
+ 1 file changed, 1 deletion(-)
+ delete mode 100644 index.html
+
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/test1 (master)
+$ git clone https://github.com/studyHooligen/SimulinkModel.git
+Cloning into 'SimulinkModel'...
+remote: Enumerating objects: 44, done.
+remote: Counting objects: 100% (44/44), done.
+remote: Compressing objects: 100% (39/39), done.
+remote: Total 44 (delta 10), reused 36 (delta 2), pack-reused 0
+Unpacking objects: 100% (44/44), done.
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/Git-test2 (master)
+$ cd ~/.ssh
+bash: cd: /c/Users/Y7000/.ssh: No such file or directory
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/Git-test2 (master)
+$ ssh-keygen -t rsa -C "3435997461@qq.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/Y7000/.ssh/id_rsa):
+Created directory '/c/Users/Y7000/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/Y7000/.ssh/id_rsa.
+Your public key has been saved in /c/Users/Y7000/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:9OyOy9/NHfmePrAhSa7tQ/ta6+Nkr6d0EXOrDusjY+o 3435997461@qq.com
+The key's randomart image is:
++---[RSA 2048]----+
+|                 |
+|                 |
+|        .      o.|
+|       . o .    =|
+|        S = .  o |
+|         . = o. o|
+|          =.o*++ |
+|       . B *O=+++|
+|      .E*oB=OOO==|
++----[SHA256]-----+
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/Git-test2 (master)
+$ ssh -T git@github.com
+The authenticity of host 'github.com (192.30.255.112)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no)? y
+Please type 'yes' or 'no': yes
+Warning: Permanently added 'github.com,192.30.255.112' (RSA) to the list of known hosts.
+Hi mabin1172! You've successfully authenticated, but GitHub does not provide shell access.
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/Git-test2 (master)
+$ git remote add
+usage: git remote add [<options>] <name> <url>
+
+    -f, --fetch           fetch the remote branches
+    --tags                import all tags and associated objects when fetching
+                          or do not fetch any tag at all (--no-tags)
+    -t, --track <branch>  branch(es) to track
+    -m, --master <branch>
+                          master branch
+    --mirror[=(push|fetch)]
+                          set up remote as a mirror to push to or fetch from
+
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/Git-test2 (master)
+$ git remote add origin https://github.com/mabin1172/test1.git
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/Git-test2 (master)
+$ git push -u origin master
+Logon failed, use ctrl+c to cancel basic credential prompt.
+Username for 'https://github.com': 3435997461@qq.com
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/mabin1172/test1.git/'
+
+Y7000@LAPTOP-MK07CAAL MINGW64 /f/Git-test2 (master)
+$ git push -u origin master
+Logon failed, use ctrl+c to cancel basic credential prompt.
+Username for 'https://github.com': 3435997461@qq.com
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 234 bytes | 58.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/mabin1172/test1.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
