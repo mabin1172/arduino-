@@ -1,5 +1,5 @@
 mabin 2021.8.21 18.23
-#include <SoftwareSerial.h>          //库文件
+#include <SoftwareSerial.h>          // 库文件
 #include<Stepper.h>
 
 SoftwareSerial BT(8,9);  //设置蓝牙与板子的连接端口。  pin 8  接蓝牙的 TXD    pin 9 接蓝牙的 RXD
