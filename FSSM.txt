@@ -1,0 +1,241 @@
+mabin 2021.8.21 18.23
+#include <SoftwareSerial.h>          //库文件
+#include<Stepper.h>
+
+SoftwareSerial BT(8,9);  //设置蓝牙与板子的连接端口。  pin 8  接蓝牙的 TXD    pin 9 接蓝牙的 RXD
+
+char X;                              //定义一个变量存数据。
+
+const int STEPS_PER_ROTOR_REV = 32; // 电机内部输出轴旋转一周步数
+ 
+const int GEAR_REDUCTION = 64;//  减速比
+ 
+const float STEPS_PER_OUT_REV = STEPS_PER_ROTOR_REV * GEAR_REDUCTION;// 电机外部输出轴旋转一周步数 （2048）
+ 
+int StepsRequired;// 电机旋转步数
+
+Stepper steppermotor_1(STEPS_PER_ROTOR_REV, 5, 7, 6, 10); // 电机控制引脚为 5,6,7,10；分别对应In1,In2,In3,In4
+  
+Stepper steppermotor_2(STEPS_PER_ROTOR_REV, 0, 3, 2, 4); // 电机控制引脚为 0,2,3,4；分别对应In1,In2,In3,In4
+
+int input1 = 12; // 定义uno的pin 12 向 input1 输出 
+int input2 = 13; // 定义uno的pin 13 向 input2 输出
+int input3 = 11; // 定义uno的pin 13 向 input2 输出
+
+#define GO1 'A'
+#define GO2 'B'
+#define GO3 'C'
+#define GO4 'D'
+#define STOP1 'E'
+#define FRONT 'F'
+#define BACK 'G'
+#define LEFT 'H'
+#define RIGHT 'I'
+#define RECOVER 'N'
+
+static int front_back =0;
+static int right_left =0;//定义全局变量，用来记录步数
+
+ int row_speed_1 = 100; //轮子的转速
+int row_speed_2 = 200; //轮子的转速
+
+
+void setup() {
+//  Serial.begin (9600);
+//初始化各IO,模式为OUTPUT 输出模式
+pinMode(input1,OUTPUT);
+pinMode(input2,OUTPUT);
+pinMode(input3,OUTPUT);
+
+BT.begin(9600);                  //蓝牙通信速率，默认一般为 9600
+
+ car_stop();
+}
+ 
+void loop() {
+ 
+  if (BT.available())               //检测：【蓝牙】如果数据写入，则执行。
+  {
+    X = BT.read();                  //把检测到的数据给到自定义变量 X
+    
+    Run(X);
+
+  }
+  
+}
+
+void car_stop()
+{
+  digitalWrite(input1,LOW);
+  digitalWrite(input2,LOW); 
+}
+
+void go_1()
+{
+  digitalWrite(input1,HIGH);
+  digitalWrite(input2,LOW);
+  analogWrite(input3,row_speed_1);
+}
+
+void go_2()
+{
+  digitalWrite(input1,HIGH);
+  digitalWrite(input2,LOW);
+  analogWrite(input3,row_speed_2);
+}
+
+void go_3()
+{
+  digitalWrite(input1,LOW);
+  digitalWrite(input2,HIGH);
+  analogWrite(input3,row_speed_1);
+}
+  
+void go_4()
+{
+  digitalWrite(input1,LOW);
+  digitalWrite(input2,HIGH);
+  analogWrite(input3,row_speed_2);
+}
+
+void front()
+{
+  steppermotor_1.setSpeed(800);    
+  StepsRequired  =  40;
+  steppermotor_1.step(StepsRequired);
+}
+
+void back()
+{
+  steppermotor_1.setSpeed(800);    
+  StepsRequired  =  -40;
+  steppermotor_1.step(StepsRequired);
+}
+
+void left()
+{
+  steppermotor_2.setSpeed(800);    
+  StepsRequired  =  40;
+  steppermotor_2.step(StepsRequired);
+}
+
+void right()
+{
+  steppermotor_2.setSpeed(800);    
+  StepsRequired  =  -40;
+  steppermotor_2.step(StepsRequired);
+}
+
+void Run(char X)//判别式
+{
+switch(X)
+{
+   case GO1:
+   {
+      go_1();
+      break;
+   }
+  
+   case GO2:
+   {
+     go_2();
+      break;
+   }
+
+   case GO3:
+   {
+      go_3();
+      break;
+   }
+
+    case GO4:
+   {
+      go_4();
+      break;
+   }
+
+   case STOP1:
+   {
+      car_stop();
+      break;
+   }
+   
+   default:
+   {
+      break;
+   }
+}
+
+switch(X)
+{
+   case FRONT:
+   {
+     do
+     {
+      front();
+      front_back =front_back+4;
+      }while(BT.read()!='J');
+      break;
+   }
+  
+   case BACK:
+   {
+     do
+     {
+      back();
+      front_back =front_back-4;
+      }while(BT.read()!='K');
+      break;
+   }
+
+   case LEFT:
+   {
+      do
+     {
+      left();
+      right_left =right_left+4;
+      }while(BT.read()!='L');
+      break;
+   }
+
+    case RIGHT:
+   {
+      do
+     {
+      right();
+      right_left =right_left-4;
+      }while(BT.read()!='M');
+      break;
+   }
+
+    case RECOVER:
+   {
+       if(front_back!=0)
+       {
+         steppermotor_1.setSpeed(800);    
+         StepsRequired  =  -front_back*10;
+         steppermotor_1.step(StepsRequired);
+
+         front_back=0;
+       }
+
+       if(right_left!=0)
+       {
+         steppermotor_2.setSpeed(800);    
+         StepsRequired  =  -right_left*10;
+         steppermotor_2.step(StepsRequired);
+
+         right_left=0;
+       }
+       
+       break;
+   }
+
+   default:
+   {
+      break;
+   }
+}
+
+}
+
