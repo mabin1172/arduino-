@@ -36,8 +36,8 @@ int input3 = 11; // 定义uno的pin 13 向 input2 输出
 static int front_back =0;
 static int right_left =0;//定义全局变量，用来记录步数
 
- int row_speed_1 = 100; //轮子的转速
-int row_speed_2 = 200; //轮子的转速
+ int row_speed_1 = 100; //转速
+int row_speed_2 = 200; //转速
 
 
 void setup() {
